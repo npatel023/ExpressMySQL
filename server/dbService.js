@@ -42,21 +42,22 @@ class DbService {
     }
 
 
-    async insertNewName(name) {
+    async insertNewUser(name, password) {
         try {
             const dateAdded = new Date();
             const insertId = await new Promise((resolve, reject) => {
-                const query = "INSERT INTO users (userName, created_at) VALUES (?,?);";
+                const query = "INSERT INTO users (userName, password, created_at) VALUES (?,?,?);";
 
-                connection.query(query, [name, dateAdded] , (err, result) => {
+                connection.query(query, [name, password, dateAdded] , (err, result) => {
                     if (err) reject(new Error(err.message));
                     resolve(result.insertId);
                 })
             });
             return {
                 id : insertId,
-                name : name,
-                dateAdded : dateAdded
+                name,
+                password,
+                dateAdded,
             };
         } catch (error) {
             console.log(error);

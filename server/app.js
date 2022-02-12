@@ -19,6 +19,7 @@ app.post('/user', async (request, response) => {
   const db = dbService.getDbServiceInstance();
 
   // TODO make this more solid
+  // How though?
   const foundUser = await db.searchByName(username);
     
   if (foundUser.length) {
@@ -26,7 +27,7 @@ app.post('/user', async (request, response) => {
   }
 
   try {
-    const result = await db.insertNewName(username);
+    const result = await db.insertNewUser(username, password);
     return response.json({ data: result });
   } catch (err) {
     console.log(err);
